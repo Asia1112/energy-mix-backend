@@ -6,8 +6,13 @@ import energyRoutes from "./routes/energy.routes";
 dotenv.config();
 
 const app = express();
+const corsOrigin = process.env.CORS_ORIGIN || "http://localhost:5173";
 
-app.use(cors());
+app.use(
+  cors({
+    origin: corsOrigin
+  })
+);
 app.use(express.json());
 
 app.use("/api", energyRoutes);
