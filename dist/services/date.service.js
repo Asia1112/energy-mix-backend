@@ -12,10 +12,11 @@ function addDays(date, days) {
 }
 function getThreeDayRange() {
     const todayStart = startOfUtcDay(new Date());
-    const afterThreeDays = addDays(todayStart, 3);
+    const yesterdayStart = addDays(todayStart, -1);
+    const afterFourDays = addDays(todayStart, 4);
     return {
-        from: todayStart.toISOString(),
-        to: afterThreeDays.toISOString()
+        from: yesterdayStart.toISOString(),
+        to: afterFourDays.toISOString()
     };
 }
 function getTwoDayRangeFromTomorrow() {
