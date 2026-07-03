@@ -6,7 +6,8 @@ import energyRoutes from "./routes/energy.routes";
 dotenv.config();
 
 const app = express();
-const corsOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
+const corsOriginConfig = process.env.CORS_ORIGIN || "*";
+const corsOrigins = corsOriginConfig
   .split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);
@@ -14,7 +15,11 @@ const corsOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || corsOrigins.includes(origin)) {
+      if (
+        corsOrigins.includes("*") ||
+        !origin ||
+        corsOrigins.includes(origin)
+      ) {
         callback(null, true);
         return;
       }
