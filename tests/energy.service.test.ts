@@ -137,18 +137,30 @@ describe("findBestChargingWindow", () => {
 
   it("should use the first best window when two windows have the same average", () => {
     const intervals: GenerationInterval[] = [
-      createInterval("2026-07-03T00:00:00Z", [
-        { fuel: "wind", perc: 40 },
-        { fuel: "gas", perc: 60 }
-      ], "2026-07-03T00:30:00Z"),
-      createInterval("2026-07-03T00:30:00Z", [
-        { fuel: "wind", perc: 60 },
-        { fuel: "gas", perc: 40 }
-      ], "2026-07-03T01:00:00Z"),
-      createInterval("2026-07-03T01:00:00Z", [
-        { fuel: "wind", perc: 40 },
-        { fuel: "gas", perc: 60 }
-      ], "2026-07-03T01:30:00Z")
+      createInterval(
+        "2026-07-03T00:00:00Z",
+        [
+          { fuel: "wind", perc: 40 },
+          { fuel: "gas", perc: 60 }
+        ],
+        "2026-07-03T00:30:00Z"
+      ),
+      createInterval(
+        "2026-07-03T00:30:00Z",
+        [
+          { fuel: "wind", perc: 60 },
+          { fuel: "gas", perc: 40 }
+        ],
+        "2026-07-03T01:00:00Z"
+      ),
+      createInterval(
+        "2026-07-03T01:00:00Z",
+        [
+          { fuel: "wind", perc: 40 },
+          { fuel: "gas", perc: 60 }
+        ],
+        "2026-07-03T01:30:00Z"
+      )
     ];
 
     const result = findBestChargingWindow(intervals, 1);

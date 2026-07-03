@@ -1,7 +1,13 @@
 import { Router } from "express";
 import { fetchGenerationMix } from "../services/carbonApi.service";
-import { getThreeDayRange, getTwoDayRangeFromTomorrow } from "../services/date.service";
-import { calculateDailyAverages, findBestChargingWindow } from "../services/energy.service";
+import {
+  getThreeDayRange,
+  getTwoDayRangeFromTomorrow
+} from "../services/date.service";
+import {
+  calculateDailyAverages,
+  findBestChargingWindow
+} from "../services/energy.service";
 
 function getTargetDates(): string[] {
   const today = new Date();
@@ -26,7 +32,7 @@ router.get("/energy-mix", async (req, res) => {
       .sort((a, b) => a.date.localeCompare(b.date));
 
     res.json(result);
-  } catch (error) {
+  } catch {
     res.status(500).json({
       message: "Failed to fetch energy mix data."
     });
@@ -49,7 +55,7 @@ router.get("/charging-window", async (req, res) => {
     const result = findBestChargingWindow(data, hours);
 
     res.json(result);
-  } catch (error) {
+  } catch {
     res.status(500).json({
       message: "Failed to calculate charging window."
     });

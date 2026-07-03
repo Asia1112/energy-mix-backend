@@ -23,7 +23,7 @@ router.get("/energy-mix", async (req, res) => {
             .sort((a, b) => a.date.localeCompare(b.date));
         res.json(result);
     }
-    catch (error) {
+    catch {
         res.status(500).json({
             message: "Failed to fetch energy mix data."
         });
@@ -42,7 +42,7 @@ router.get("/charging-window", async (req, res) => {
         const result = (0, energy_service_1.findBestChargingWindow)(data, hours);
         res.json(result);
     }
-    catch (error) {
+    catch {
         res.status(500).json({
             message: "Failed to calculate charging window."
         });
