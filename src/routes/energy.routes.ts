@@ -1,31 +1,23 @@
 import { Router } from "express";
 import { fetchGenerationMix } from "../services/carbonApi.service";
 import {
-  getThreeDayRange,
-  getTwoDayRangeFromTomorrow
+  getChargingWindowRangeFromTomorrow,
+  getEnergyMixFetchRange,
+  getEnergyMixTargetDates
 } from "../services/date.service";
 import {
   calculateDailyAverages,
   findBestChargingWindow
 } from "../services/energy.service";
 
-function getTargetDates(): string[] {
-  const today = new Date();
-
-  return [0, 1, 2].map((offset) => {
-    const date = new Date(today);
-    date.setDate(today.getDate() + offset);
-    return date.toISOString().slice(0, 10);
-  });
-}
 const router = Router();
 
 router.get("/energy-mix", async (req, res) => {
   try {
-    const { from, to } = getThreeDayRange();
+    const { from, to } = getEnergyMixFetchRange();
     const data = await fetchGenerationMix(from, to);
 
-    const targetDates = getTargetDates();
+    const targetDates = getEnergyMixTargetDates();
 
     const result = calculateDailyAverages(data)
       .filter((day) => targetDates.includes(day.date))
@@ -49,7 +41,7 @@ router.get("/charging-window", async (req, res) => {
       });
     }
 
-    const { from, to } = getTwoDayRangeFromTomorrow();
+    const { from, to } = getChargingWindowRangeFromTomorrow();
     const data = await fetchGenerationMix(from, to);
 
     const result = findBestChargingWindow(data, hours);

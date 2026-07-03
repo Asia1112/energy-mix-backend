@@ -17,8 +17,15 @@ function addDays(date: Date, days: number): Date {
   return copy;
 }
 
-export function getThreeDayRange(): { from: string; to: string } {
-  const todayStart = startOfUtcDay(new Date());
+function getDateOnly(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+export function getEnergyMixFetchRange(baseDate = new Date()): {
+  from: string;
+  to: string;
+} {
+  const todayStart = startOfUtcDay(baseDate);
   const yesterdayStart = addDays(todayStart, -1);
   const afterFourDays = addDays(todayStart, 4);
 
@@ -28,8 +35,17 @@ export function getThreeDayRange(): { from: string; to: string } {
   };
 }
 
-export function getTwoDayRangeFromTomorrow(): { from: string; to: string } {
-  const todayStart = startOfUtcDay(new Date());
+export function getEnergyMixTargetDates(baseDate = new Date()): string[] {
+  const todayStart = startOfUtcDay(baseDate);
+
+  return [0, 1, 2].map((offset) => getDateOnly(addDays(todayStart, offset)));
+}
+
+export function getChargingWindowRangeFromTomorrow(baseDate = new Date()): {
+  from: string;
+  to: string;
+} {
+  const todayStart = startOfUtcDay(baseDate);
   const tomorrowStart = addDays(todayStart, 1);
   const afterTwoDays = addDays(tomorrowStart, 2);
 
