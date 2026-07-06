@@ -22,6 +22,7 @@ Create `.env` from `.env.example`:
 ```text
 PORT=3000
 CORS_ORIGIN=*
+CARBON_API_BASE_URL=https://api.carbonintensity.org.uk
 ```
 
 `CORS_ORIGIN` can be `*` or a comma-separated list:
@@ -29,6 +30,8 @@ CORS_ORIGIN=*
 ```text
 CORS_ORIGIN=http://localhost:5173,https://example.com
 ```
+
+`CARBON_API_BASE_URL` points to the Carbon Intensity API base URL.
 
 ## Install
 
