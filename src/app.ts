@@ -11,7 +11,14 @@ export function createApp() {
     .filter(Boolean);
   const corsOrigin = corsOrigins.includes("*") ? "*" : corsOrigins;
 
-  app.use(cors({ origin: corsOrigin }));
+  app.use(
+    cors({
+      origin: corsOrigin,
+      methods: ["GET"],
+      allowedHeaders: ["Content-Type"],
+      maxAge: 86400
+    })
+  );
   app.use(express.json());
 
   app.get("/health", (req, res) => {
