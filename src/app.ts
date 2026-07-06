@@ -9,23 +9,9 @@ export function createApp() {
     .split(",")
     .map((origin) => origin.trim())
     .filter(Boolean);
+  const corsOrigin = corsOrigins.includes("*") ? "*" : corsOrigins;
 
-  app.use(
-    cors({
-      origin(origin, callback) {
-        if (
-          corsOrigins.includes("*") ||
-          !origin ||
-          corsOrigins.includes(origin)
-        ) {
-          callback(null, true);
-          return;
-        }
-
-        callback(new Error("Origin is not allowed by CORS."));
-      }
-    })
-  );
+  app.use(cors({ origin: corsOrigin }));
   app.use(express.json());
 
   app.get("/health", (req, res) => {
